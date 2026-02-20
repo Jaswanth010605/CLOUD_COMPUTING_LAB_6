@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh '''
                 docker rm -f nginx-lb || true
-                docker run -d --name nginx-lb -p 80:80 nginx
+                docker run -d --name nginx-lb -p 80:80 --link backend1:backend1 --link backend2:backend2 nginx
                 sleep 2
                 docker cp nginx/default.conf nginx-lb:/etc/nginx/conf.d/default.conf
                 docker exec nginx-lb nginx -s reload
